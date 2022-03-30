@@ -12,14 +12,13 @@ function Home() {
     const [movies, setMovies] = useState([])
     const image_path = 'https://image.tmdb.org/t/p/w500'
 
-    useEffect(()  => {
-
-        fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${APIKey}&language=en-US&page=1`)
-            .then(response => response.json())
-            .then(data => setMovies(data.results))  
-
-
-    }, [])
+    useEffect(() => {
+        fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${APIKey}&language=en-US`)
+        .then(response => response.json())
+        .then(data => {
+          setMovies(data.results)
+        })
+      }, [])
 
     return (
         <Container>
@@ -28,8 +27,9 @@ function Home() {
                 {movies.map(movie =>{
                     return (
                         <Movie key={movie.id}>
-
-                        <Link to ={`/details/${movie.id}`}><img src={`${image_path}${movie.poster_path}`} alt={movie.title}/></Link>
+                            <Link to ={`/details/${movie.id}`}>
+                                <img src={`${image_path}${movie.poster_path}`} alt={movie.title}/>
+                            </Link>
                             <span>{movie.title}</span>
                         </Movie>
                     )
